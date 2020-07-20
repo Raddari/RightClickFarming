@@ -3,7 +3,10 @@ package me.raddari.rcf;
 import com.google.common.collect.Maps;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -17,23 +20,28 @@ public final class PlayerFarmingListener implements Listener {
     @EventHandler
     public void onPlayerInteract(@NotNull PlayerInteractEvent event) {
         var block = event.getClickedBlock();
+        var player = event.getPlayer();
+        var item = event.getItem();
 
         if (block != null && VALID_HARVESTABLES.contains(block.getType())) {
-            // Player right clicked a crop
-            // Only allow harvesting of fully grown crops
-            var crop = (Ageable) block.getBlockData();
+            if (item == null || !item.getType().isBlock()) {
+                // Player right clicked a crop
+                // Only allow harvesting of fully grown crops
+                var crop = (Ageable) block.getBlockData();
 
-            if (crop.getAge() == crop.getMaximumAge()) {
-                var player = event.getPlayer();
-                var world = player.getWorld();
-                var material = block.getBlockData().getMaterial();
-
-                block.breakNaturally();
-                player.incrementStatistic(Statistic.MINE_BLOCK, material);
-                world.getBlockAt(block.getLocation()).setType(material);
-                player.incrementStatistic(Statistic.USE_ITEM, seedType(material));
+                if (crop.getAge() == crop.getMaximumAge()) {
+                    doHarvest(player, player.getWorld(), block);
+                }
             }
         }
+    }
+
+    private static void doHarvest(@NotNull Player player, @NotNull World world, @NotNull Block block) {
+        var material = block.getBlockData().getMaterial();
+        block.breakNaturally();
+        player.incrementStatistic(Statistic.MINE_BLOCK, material);
+        world.getBlockAt(block.getLocation()).setType(material);
+        player.incrementStatistic(Statistic.USE_ITEM, seedType(material));
     }
 
     private static @NotNull Material seedType(@NotNull Material crop) {
