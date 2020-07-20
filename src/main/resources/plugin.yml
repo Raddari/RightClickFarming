@@ -1,0 +1,6 @@
+name: 'RaddiExtras'
+main: 'me.raddari.RaddiExtras'
+version: '1.0.0'
+description: 'A collection of useful plugins by Raddari'
+author: 'Raddari'
+api-version: '1.13'
