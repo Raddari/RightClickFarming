@@ -8,14 +8,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 public final class PlayerFarmingListener implements Listener {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerFarmingListener.class.getSimpleName());
 
     @EventHandler
     public void onPlayerInteract(@NotNull PlayerInteractEvent event) {
