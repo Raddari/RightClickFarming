@@ -1,9 +1,19 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'org.yaml', name: 'snakeyaml', version: '1.27'
+    }
+}
+
 plugins {
     id 'java'
 }
 
+def cfg = new org.yaml.snakeyaml.Yaml().load(new File('src/main/resources/plugin.yml').newInputStream())
 group 'me.raddari'
-version '1.0.1'
+version "${cfg.version}"
 
 repositories {
     mavenCentral()
