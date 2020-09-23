@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 public final class RightClickFarming extends JavaPlugin {
 
+    @SuppressWarnings("java:S1845") // 'logger' package protected field in JavaPlugin superclass
     private static final Logger LOGGER = LoggerFactory.getLogger(RightClickFarming.class);
 
     @Override
