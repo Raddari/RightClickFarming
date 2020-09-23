@@ -5,7 +5,6 @@ Notable changes to **RightClickFarming** are documented in this file.
 ### Hotfix
 ### Changed
 - API version to 1.16
-- Automatic versioning in build.gradle
 
 ## [1.0.0] - 23/09/20
 ### Initial Release

@@ -1,4 +1,3 @@
----
 name: 'RightClickFarming'
 main: 'me.raddari.rcf.RightClickFarming'
 version: '1.0.1'
@@ -6,4 +5,3 @@ description: 'Allows players to farm by right clicking'
 author: 'Raddari'
 website: 'https://github.com/Raddari/RightClickFarming'
 api-version: '1.16'
-...
