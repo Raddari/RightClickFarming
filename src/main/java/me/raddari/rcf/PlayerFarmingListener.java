@@ -11,11 +11,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Set;
 
 public final class PlayerFarmingListener implements Listener {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerFarmingListener.class);
 
     @EventHandler
     public void onPlayerInteract(@NotNull PlayerInteractEvent event) {
@@ -28,8 +32,10 @@ public final class PlayerFarmingListener implements Listener {
                 // Player right clicked a crop
                 // Only allow harvesting of fully grown crops
                 var crop = (Ageable) block.getBlockData();
+                LOGGER.debug("{} right click farm block {}", player.getName(), crop);
 
                 if (crop.getAge() == crop.getMaximumAge()) {
+                    LOGGER.debug("{} is harvesting block", player.getName());
                     doHarvest(player, player.getWorld(), block);
                 }
             }
@@ -46,7 +52,9 @@ public final class PlayerFarmingListener implements Listener {
 
     private static @NotNull Material seedType(@NotNull Material crop) {
         if (!SEED_LOOKUP.containsKey(crop)) {
-            throw new IllegalArgumentException(String.format("Material does not have a seed type: %s", crop));
+            var errorMsg = String.format("Material %s does not have a seed type", crop);
+            LOGGER.error(errorMsg);
+            throw new IllegalArgumentException(errorMsg);
         }
         return SEED_LOOKUP.get(crop);
     }
