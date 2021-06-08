@@ -1,3 +1,5 @@
+import org.yaml.snakeyaml.Yaml
+
 buildscript {
     repositories {
         mavenCentral()
@@ -11,7 +13,7 @@ plugins {
     id 'java'
 }
 
-def cfg = new org.yaml.snakeyaml.Yaml().load(new File('src/main/resources/plugin.yml').newInputStream())
+def cfg = new Yaml().load(new FileInputStream(new File('src/main/resources/plugin.yml')))
 group 'me.raddari'
 version "${cfg.version}"
 
@@ -23,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    compile group: 'com.destroystokyo.paper', name: 'paper-api', version: '1.16.1-R0.1-SNAPSHOT'
+    implementation group: 'com.destroystokyo.paper', name: 'paper-api', version: '1.16.5-R0.1-SNAPSHOT'
     // https://mvnrepository.com/artifact/org.jetbrains/annotations
-    compile group: 'org.jetbrains', name: 'annotations', version: '19.0.0'
+    implementation group: 'org.jetbrains', name: 'annotations', version: '20.+'
 }
